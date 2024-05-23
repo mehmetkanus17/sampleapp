@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result-app-deploy
+  labels:
+    name: result-app-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: result-app-pod
+  template:
+    metadata:
+      name: result-app-pod
+      labels:
+        name: result-app-pod
+    spec:
+      nodeSelector:
+        node: private
+      tolerations:
+      - key: "node"
+        operator: "Equal"
+        value: "private"
+        effect: "NoSchedule"
+      # imagePullSecrets:
+      #   - name: ghcr
+      containers:
+        - name: result-app
+          image: mehmetkanus17/result-application:1.0.1
+          ports:
+          - containerPort: 80
+          env:
+          - name: MYSQL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: mysql-admin-password
+          envFrom:
+          - configMapRef:
+              name: servers-configmap
+
+
