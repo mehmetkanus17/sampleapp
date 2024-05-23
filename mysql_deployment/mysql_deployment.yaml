@@ -15,13 +15,6 @@ spec:
       labels:
         name: mysql-pod
     spec:
-      nodeSelector:
-        node: private
-      tolerations:
-      - key: "node"
-        operator: "Equal"
-        value: "private"
-        effect: "NoSchedule"
       containers:
       - image: mysql:5.7
         name: mysql
