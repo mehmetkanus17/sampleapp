@@ -15,15 +15,6 @@ spec:
       labels:
         name: result-app-pod
     spec:
-      nodeSelector:
-        node: private
-      tolerations:
-      - key: "node"
-        operator: "Equal"
-        value: "private"
-        effect: "NoSchedule"
-      # imagePullSecrets:
-      #   - name: ghcr
       containers:
         - name: result-app
           image: mehmetkanus17/result-application:1.0.1
